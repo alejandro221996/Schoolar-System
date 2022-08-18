@@ -18,52 +18,52 @@ interface Props {
 export const CartList: FC<Props> = ({ editable = false }) => {
 
     return (
-        <>
-            {
-                productsInCar.map(product => (
-                    <Grid container spacing={2} key={product.slug} sx={{ mb: 1 }}>
-                        <Grid item xs={3}>
-                            <NextLink href="/product/slug" passHref>
-                                <Link>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            image={`/products/${product.images[0]}`}
-                                            component="img"
-                                            sx={{ borderRadius: '5px' }}
-                                        >
-                                        </CardMedia>
-                                    </CardActionArea>
-                                </Link>
-                            </NextLink>
-                        </Grid>
-                        <Grid item xs={7}>
-                            <Box display='flex' flexDirection='column'>
-                                <Typography variant='body1'>{product.title}</Typography>
-                                <Typography variant='body1'>Talla <strong>{product.sizes[0]}</strong></Typography>
-                                {
-                                    editable
-                                        ? <ItemCounter />
-                                        : <Typography variant='h5'>3 items</Typography>
-                                }
+      <>
+        {productsInCar.map((product) => (
+          <Grid container spacing={2} key={product.slug} sx={{ mb: 1 }}>
+            <Grid item xs={3}>
+              <NextLink href="/product/slug" passHref>
+                <Link>
+                  <CardActionArea>
+                    <CardMedia
+                      image={`/products/${product.images[0]}`}
+                      component="img"
+                      sx={{ borderRadius: "5px" }}
+                    ></CardMedia>
+                  </CardActionArea>
+                </Link>
+              </NextLink>
+            </Grid>
+            <Grid item xs={7}>
+              <Box display="flex" flexDirection="column">
+                <Typography variant="body1">{product.title}</Typography>
+                <Typography variant="body1">
+                  Talla <strong>{product.sizes[0]}</strong>
+                </Typography>
+                {editable ? (
+                  <></>
+                ) : (
+                  <Typography variant="h5">3 items</Typography>
+                )}
+              </Box>
+            </Grid>
 
-                            </Box>
-                        </Grid>
-
-                        <Grid item xs={2} display='flex' alignItems='center' flexDirection='column'>
-                            <Typography variant='subtitle1'>{`$${product.price}`}</Typography>
-                            {
-                                editable && (
-                                    <Button variant='text' className='remover_btn'>
-                                        Remover
-                                    </Button>
-                                )
-                            }
-
-                        </Grid>
-                    </Grid>
-                ))
-            }
-        </>
-
-    )
+            <Grid
+              item
+              xs={2}
+              display="flex"
+              alignItems="center"
+              flexDirection="column"
+            >
+              <Typography variant="subtitle1">{`$${product.price}`}</Typography>
+              {editable && (
+                <Button variant="text" className="remover_btn">
+                  Remover
+                </Button>
+              )}
+            </Grid>
+          </Grid>
+        ))}
+      </>
+    );
 }
