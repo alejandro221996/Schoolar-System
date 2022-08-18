@@ -1,3 +1,4 @@
+// eslint-disable-next-line @next/next/no-document-import-in-page
 import Document, {
   DocumentContext,
   Html,
@@ -12,11 +13,13 @@ class MyDocument extends Document {
 
     return initalProps;
   }
+  // eslint-disable-next-line @next/next/no-page-custom-font
 
   render() {
     return (
       <Html>
         <Head>
+          {/*eslint-disable-next-line @next/next/no-page-custom-font*/}
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"

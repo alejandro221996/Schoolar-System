@@ -8,6 +8,7 @@ import {
   Grid,
   Typography,
   Link,
+  Chip,
 } from "@mui/material";
 import { IProduct } from "../../interfaces/products";
 
@@ -35,6 +36,30 @@ export const ProductCard: FC<Props> = ({ product }) => {
         <NextLink href={`/product/${product.slug}`} passHref prefetch={false}>
           <Link>
             <CardActionArea>
+              {product.inStock === 0 ? (
+                <Chip
+                  sx={{
+                    position: "absolute",
+                    zIndex: 99,
+                    top: "10px",
+                    left: "10px",
+                  }}
+                  className="primary"
+                  label="No hay productos disponibles"
+                />
+              ) : (
+                <Chip
+                  sx={{
+                    position: "absolute",
+                    zIndex: 99,
+                    top: "10px",
+                    left: "10px",
+                  }}
+                  className="primary"
+                  label={`${product.inStock} disponibles`}
+                />
+              )}
+
               <CardMedia
                 className="fadeIn"
                 component="img"
@@ -55,6 +80,6 @@ export const ProductCard: FC<Props> = ({ product }) => {
         <Typography fontWeight={700}>{product.title}</Typography>
         <Typography fontWeight={500}>{`$${product.price}`}</Typography>
       </Box>
-    </Grid >
+    </Grid>
   );
 };

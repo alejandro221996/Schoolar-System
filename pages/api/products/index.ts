@@ -31,14 +31,13 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     let condition = {}
 
-    if (gender !== 'all' && SHOP_CONSTANTS.validGenders.includes(`${gender}`)) {
-        condition = { gender }
-
+    if (gender !== "all" && SHOP_CONSTANTS.validGenders.includes(`${gender}`)) {
+      condition = { gender };
     }
 
     const products = await Product.find(condition)
-        .select('title images price inStock slug -_id')
-        .lean()
+      .select("title images price inStock slug -_id")
+      .lean();
 
     await db.disconnect()
 
