@@ -53,33 +53,6 @@ export const SideMenu = () => {
             <ListItemText primary={"Perfil"} />
           </ListItem>
 
-          <ListItem button onClick={() => navigateTo("/orders/history")}>
-            <ListItemIcon>
-              <ConfirmationNumberOutlined />
-            </ListItemIcon>
-            <ListItemText primary={"Mis Ordenes"} />
-          </ListItem>
-          <ListItem button onClick={() => navigateTo("/category/men")}>
-            <ListItemIcon>
-              <MaleOutlined />
-            </ListItemIcon>
-            <ListItemText primary={"Hombres"} />
-          </ListItem>
-
-          <ListItem button onClick={() => navigateTo("/category/women")}>
-            <ListItemIcon>
-              <FemaleOutlined />
-            </ListItemIcon>
-            <ListItemText primary={"Mujeres"} />
-          </ListItem>
-
-          <ListItem button onClick={() => navigateTo("/category/kid")}>
-            <ListItemIcon>
-              <EscalatorWarningOutlined />
-            </ListItemIcon>
-            <ListItemText primary={"Niños"} />
-          </ListItem>
-
           <ListItem button onClick={() => navigateTo("/auth/login")}>
             <ListItemIcon>
               <VpnKeyOutlined />
@@ -97,19 +70,6 @@ export const SideMenu = () => {
           {/* Admin */}
           <Divider />
           <ListSubheader>Admin Panel</ListSubheader>
-
-          <ListItem button>
-            <ListItemIcon>
-              <CategoryOutlined />
-            </ListItemIcon>
-            <ListItemText primary={"Productos"} />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <ConfirmationNumberOutlined />
-            </ListItemIcon>
-            <ListItemText primary={"Ordenes"} />
-          </ListItem>
 
           <ListItem button>
             <ListItemIcon>

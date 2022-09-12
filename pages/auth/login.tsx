@@ -10,6 +10,7 @@ import { AuthContext } from "../../context";
 import axios from "axios";
 import { ErrorOutline, CheckCircleOutlineOutlined } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import PeopleSharpIcon from "@mui/icons-material/PeopleSharp";
 
 type FormData = {
   email: string;
@@ -44,10 +45,16 @@ const LoginPage = () => {
         <Box sx={{ width: 350, padding: "10px 20px" }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h1" component="h1">
+              <Typography
+                sx={{ textAlign: "center" }}
+                variant="h1"
+                component="h1"
+              >
                 Iniciar Sesión
               </Typography>
-
+              <Box sx={{ textAlign: "center" }}>
+                <PeopleSharpIcon sx={{ fontSize: 100, color: "green" }} />
+              </Box>
               <Chip
                 label="No encontramos ese usuario / contrasenia"
                 color="error"

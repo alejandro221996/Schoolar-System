@@ -22,13 +22,10 @@ import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context";
 //import { UiContext } from "../../context";
-import { IUser } from "../../interfaces/user";
 import LogoutIcon from "@mui/icons-material/Logout";
 export const Navbar = () => {
   const router = useRouter();
   const { logout, user } = useContext(AuthContext);
-
-  //const { toggleSideMenu } = useContext(UiContext);
 
   return (
     <AppBar>
