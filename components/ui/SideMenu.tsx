@@ -2,13 +2,14 @@ import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem
 import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react";
-import { UiContext } from "../../context";
+//import { UiContext } from "../../context";
 
 export const SideMenu = () => {
   const router = useRouter();
-  const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
+
+  const isMenuOpen = false;
   const navigateTo = (url: string) => {
-    toggleSideMenu();
+    //toggleSideMenu();
     router.push(url);
   };
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,7 +22,7 @@ export const SideMenu = () => {
       open={isMenuOpen}
       anchor="right"
       sx={{ backdropFilter: "blur(4px)", transition: "all 0.5s ease-out" }}
-      onClose={toggleSideMenu}
+      //onClose={toggleSideMenu}
     >
       <Box sx={{ width: 250, paddingTop: 5 }}>
         <List>

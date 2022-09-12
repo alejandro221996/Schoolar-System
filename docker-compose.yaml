@@ -1,7 +1,7 @@
 services:
-  entriesdb:
+  schooldb:
     image: mongo:5.0.0
-    container_name: entries-database
+    container_name: school-db
     ports:
       - 27017:27017
     volumes:

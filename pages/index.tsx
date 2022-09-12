@@ -1,32 +1,70 @@
 import { Typography } from "@mui/material";
 import type { NextPage } from "next";
-import { ShopLayout } from "../components/layouts";
-import { ProductList } from "../components/products";
-import { useProducts } from "../hooks";
+import { useContext, useEffect } from "react";
+import { DefaultLayout } from "../components/layouts";
+
 import { FullScreenLoading } from "../components/ui/FullScreenLoading";
+import { AuthContext } from "../context";
 
 const HomePage: NextPage = () => {
-  const { products, isLoading } = useProducts("/products");
+  const isLoading = false;
+
   return (
-    <ShopLayout
-      title={"My e-comerce"}
-      pageDescription={"Encuentra los mejores productos para la familia"}
+    <DefaultLayout
+      title={"My Dashboard"}
+      pageDescription={"Informacion escolar"}
     >
       {isLoading ? (
         <FullScreenLoading />
       ) : (
         <>
-          <Typography variant="h1" component="h1">
-            E-comerce
+          <Typography
+            display="inline"
+            variant="h1"
+            component="h1"
+            sx={{ fontWeight: "medium" }}
+          >
+            Bienvenido al
           </Typography>
-          <Typography variant="h2" sx={{ mb: 1 }}>
-            Todos los productos
+          <Typography
+            display="inline"
+            variant="h1"
+            component="h1"
+            sx={{ fontWeight: "bold", ml: 1 }}
+          >
+            Sistema Escolar de Informacion
           </Typography>
-          <ProductList products={products} />
         </>
       )}
-    </ShopLayout>
+    </DefaultLayout>
   );
 };
 
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+import { GetServerSideProps } from "next";
+import { jwt } from "../utils";
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const { token = "" } = req.cookies;
+  let userId = "";
+  let isValidToken = false;
+  try {
+    userId = await jwt.isValidToken(token);
+    isValidToken = true;
+  } catch (error) {
+    isValidToken = false;
+  }
+  if (!isValidToken) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};
 export default HomePage;

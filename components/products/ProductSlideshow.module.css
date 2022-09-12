@@ -1,7 +1,0 @@
-.each-slide>div {
-    display: flex;
-    justify-content: center;
-    background-size: contain;
-    background-position: top;
-    height: 500px;
-}
