@@ -1,49 +1,59 @@
-import { Typography } from "@mui/material";
+import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import type { NextPage } from "next";
-import { useContext, useEffect } from "react";
 import { DefaultLayout } from "../components/layouts";
-
+import { GetServerSideProps } from "next";
+import { jwt } from "../utils";
 import { FullScreenLoading } from "../components/ui/FullScreenLoading";
-import { AuthContext } from "../context";
+import { UserDashboard } from "../components/dashboards";
+import {
+  AutoStoriesSharp,
+  CreditCardOffOutlined,
+  DashboardOutlined,
+  HistoryEduSharp,
+  SchoolSharp,
+} from "@mui/icons-material";
+import { SummaryTile } from "../components/admin/SummaryTile";
+import PeopleSharpIcon from "@mui/icons-material/PeopleSharp";
 
 const HomePage: NextPage = () => {
   const isLoading = false;
 
   return (
     <DefaultLayout
-      title={"My Dashboard"}
+      title={"Dashboard"}
       pageDescription={"Informacion escolar"}
+      subTitle={"Bienvenido al Sistema Escolar de Informacion"}
+      icon={<DashboardOutlined />}
     >
-      {isLoading ? (
-        <FullScreenLoading />
-      ) : (
-        <>
-          <Typography
-            display="inline"
-            variant="h1"
-            component="h1"
-            sx={{ fontWeight: "medium" }}
-          >
-            Bienvenido al
-          </Typography>
-          <Typography
-            display="inline"
-            variant="h1"
-            component="h1"
-            sx={{ fontWeight: "bold", ml: 1 }}
-          >
-            Sistema Escolar de Informacion
-          </Typography>
-        </>
-      )}
+      <Grid container spacing={2} mt={2}>
+        <SummaryTile
+          title={50}
+          subtitle={"Usuarios registrados"}
+          icon={<PeopleSharpIcon color="success" sx={{ fontSize: 40 }} />}
+        />
+        <SummaryTile
+          title={20}
+          subtitle={"Materias registradas"}
+          icon={<AutoStoriesSharp color="success" sx={{ fontSize: 40 }} />}
+        />
+        <SummaryTile
+          title={5}
+          subtitle={"Aulas registradas"}
+          icon={<HistoryEduSharp color="success" sx={{ fontSize: 40 }} />}
+        />
+        <SummaryTile
+          title={5}
+          subtitle={"Alumnos registrados"}
+          icon={<SchoolSharp color="success" sx={{ fontSize: 40 }} />}
+        />
+      </Grid>
+      <UserDashboard />
     </DefaultLayout>
   );
 };
 
 // You should use getServerSideProps when:
 // - Only if you need to pre-render a page whose data must be fetched at request time
-import { GetServerSideProps } from "next";
-import { jwt } from "../utils";
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { token = "" } = req.cookies;

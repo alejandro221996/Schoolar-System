@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import Head from "next/head";
 import { FC, useContext } from "react";
 import { AuthContext } from "../../context";
@@ -7,6 +8,8 @@ interface Props {
   title: string;
   pageDescription: string;
   imageFullUrl?: string;
+  subTitle: string;
+  icon?: JSX.Element;
   children?: React.ReactNode | undefined;
 }
 export const DefaultLayout: FC<Props> = ({
@@ -14,6 +17,8 @@ export const DefaultLayout: FC<Props> = ({
   title,
   pageDescription,
   imageFullUrl,
+  icon,
+  subTitle,
 }) => {
   return (
     <>
@@ -25,11 +30,8 @@ export const DefaultLayout: FC<Props> = ({
         {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
       </Head>
       <nav>
-        {/*TODO navbar*/}
         <Navbar />
       </nav>
-      {/*TODO sidebar */}
-      <SideMenu />
       <main
         style={{
           margin: "80px auto",
@@ -37,7 +39,16 @@ export const DefaultLayout: FC<Props> = ({
           padding: "0px 30px",
         }}
       >
-        {children}
+        <Box display="flex" flexDirection="column">
+          <Typography variant="h1" component="h1">
+            {icon}
+            {title}
+          </Typography>
+          <Typography variant="h2" component="h2">
+            {subTitle}
+          </Typography>
+        </Box>
+        <Box className="fadeIn">{children}</Box>
       </main>
       <footer>{/*TODO Footer */}</footer>
     </>
