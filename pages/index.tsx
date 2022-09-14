@@ -4,7 +4,6 @@ import { DefaultLayout } from "../components/layouts";
 import { GetServerSideProps } from "next";
 import { jwt } from "../utils";
 import { FullScreenLoading } from "../components/ui/FullScreenLoading";
-import { UserDashboard } from "../components/dashboards";
 import {
   AutoStoriesSharp,
   CreditCardOffOutlined,
@@ -14,10 +13,22 @@ import {
 } from "@mui/icons-material";
 import { SummaryTile } from "../components/admin/SummaryTile";
 import PeopleSharpIcon from "@mui/icons-material/PeopleSharp";
+import useSWR from "swr";
+import { Dashboard } from "../components/admin/Dashboard";
 
 const HomePage: NextPage = () => {
   const isLoading = false;
+  const { data, error } = useSWR("/api/admin/dashboard", {
+    refreshInterval: 30 * 1000,
+  });
+  if (!error && !data) {
+    return <></>;
+  }
+  if (error) {
+    return <Typography>Something went wrong</Typography>;
+  }
 
+  const { users, students, teachers, courses } = data;
   return (
     <DefaultLayout
       title={"Dashboard"}
@@ -27,27 +38,27 @@ const HomePage: NextPage = () => {
     >
       <Grid container spacing={2} mt={2}>
         <SummaryTile
-          title={50}
+          title={users}
           subtitle={"Usuarios registrados"}
           icon={<PeopleSharpIcon color="success" sx={{ fontSize: 40 }} />}
         />
         <SummaryTile
-          title={20}
+          title={courses}
           subtitle={"Materias registradas"}
           icon={<AutoStoriesSharp color="success" sx={{ fontSize: 40 }} />}
         />
         <SummaryTile
-          title={5}
-          subtitle={"Aulas registradas"}
-          icon={<HistoryEduSharp color="success" sx={{ fontSize: 40 }} />}
-        />
-        <SummaryTile
-          title={5}
+          title={students}
           subtitle={"Alumnos registrados"}
           icon={<SchoolSharp color="success" sx={{ fontSize: 40 }} />}
         />
+        <SummaryTile
+          title={teachers}
+          subtitle={"Maestros registrados"}
+          icon={<SchoolSharp color="success" sx={{ fontSize: 40 }} />}
+        />
+        <Dashboard />
       </Grid>
-      <UserDashboard />
     </DefaultLayout>
   );
 };

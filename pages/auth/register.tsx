@@ -15,6 +15,7 @@ type FormData = {
   email: string;
   password: string;
   name: string;
+  role: string;
 };
 const RegisterPage = () => {
   const router = useRouter();
@@ -27,9 +28,15 @@ const RegisterPage = () => {
   } = useForm<FormData>();
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
-  const onRegisterUser = async ({ email, password, name }: FormData) => {
+  const onRegisterUser = async ({ email, password, name, role }: FormData) => {
     setError(false);
-    const { hasError, message } = await registerUser(name, email, password);
+    const { hasError, message } = await registerUser(
+      name,
+      email,
+      password,
+      role
+    );
+
     if (hasError) {
       setError(true);
       setMessage(message!);
@@ -92,6 +99,18 @@ const RegisterPage = () => {
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Role"
+                variant="filled"
+                fullWidth
+                {...register("role", {
+                  required: "Este campo es requerido",
+                })}
+                error={!!errors.role}
+                helperText={errors.role?.message}
               />
             </Grid>
             <Grid item xs={12}>

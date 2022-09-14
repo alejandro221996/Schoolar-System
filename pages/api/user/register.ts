@@ -3,6 +3,7 @@ import { db } from "../../../database";
 import { User } from "../../../models";
 import bcrypt from "bcryptjs";
 import { jwt, validations } from "../../../utils";
+import { ROLES } from "../../../database/constants";
 
 type Data =
   | { message: string }
@@ -18,8 +19,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log(req.method);
-  console.log(req.body);
   switch (req.method) {
     case "POST":
       return registerUser(req, res);
@@ -36,8 +35,14 @@ const registerUser = async (
     email = "",
     password = "",
     name = "",
-  } = req.body as { email: string; password: string; name: string };
-
+    role = "",
+  } = req.body as {
+    email: string;
+    password: string;
+    name: string;
+    role: string;
+  };
+  console.log(req.body);
   await db.connect();
   const user = await User.findOne({ email });
   if (password.length < 6) {
@@ -58,12 +63,15 @@ const registerUser = async (
     await db.disconnect();
     return res.status(409).json({ message: "User already exists" });
   }
-
+  if (!ROLES.validRoles.includes(role)) {
+    await db.disconnect();
+    return res.status(400).json({ message: "Role is not valid" });
+  }
   const newUser = new User({
     name,
     email: email.toLocaleLowerCase(),
     password: bcrypt.hashSync(password),
-    role: "operator",
+    role: role,
   });
   try {
     await newUser.save({ validateBeforeSave: true });
@@ -71,7 +79,7 @@ const registerUser = async (
     console.log(err);
     return res.status(500).json({ message: "Error creating user" });
   }
-  const { _id, role } = newUser;
+  const { _id } = newUser;
   const token = jwt.signToken(_id, email);
 
   return res.status(200).json({

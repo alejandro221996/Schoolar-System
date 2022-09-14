@@ -1,14 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../../database";
-import { Course, User } from "../../../models";
+import { IUser } from "../../../interfaces";
+import { Course, Student, Teacher, User } from "../../../models";
 
 type Data =
   | { message: string }
   | {
-      users: number;
-      students: number;
-      teachers: number;
-      courses: number;
+      users: IUser[];
     };
 export default function handler(
   req: NextApiRequest,
@@ -27,16 +25,10 @@ const getInfoDashboard = async (
   res: NextApiResponse<Data>
 ) => {
   await db.connect();
-  //get users filter by role equal to admin
-  const users = await User.find({ role: "admin" }).countDocuments();
-  const students = await User.find({ role: "user" }).countDocuments();
-  const teachers = await User.find({ role: "operator" }).countDocuments();
-  const courses = await Course.countDocuments(); //const courses = 50;
-
+  //get just the ids of the users
+  const users = await User.find({}, { name: 1, email: 1, role: 1 });
+  console.log(users);
   return res.status(200).json({
     users,
-    students,
-    teachers,
-    courses,
   });
 };
